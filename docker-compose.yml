@@ -5,22 +5,16 @@ services:
     container_name: db_app
     env_file:
       - .env
-    environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASS}
-      POSTGRES_DB: ${DB_NAME}
     ports:
       - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
 
   test-db:
     image: postgres:latest
     container_name: test-db_app
     env_file:
-      - .env-non-dev
-    environment:
-      POSTGRES_USER: ${DB_USER_TEST}
-      POSTGRES_PASSWORD: ${DB_PASS_TEST}
-      POSTGRES_DB: ${DB_NAME_TEST}
+      - .env
     command: -p 6000
     expose:
       - 6000
@@ -40,5 +34,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
-      - db-test
+      - test-db
       - redis
+volumes:
+  db-data:
