@@ -6,7 +6,7 @@ from sqlalchemy import select, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
-from src.app.models import Product, Order, Status, OrderItem
+from src.app.models import Product, Order, Status
 from src.app.operations import make_all_order_items, get_all_order_items
 from src.app.schemas import ProductRead, OrderCreate, OrderUpdate, ProductCreate, OrderRead, ProductUpdate
 from src.database import get_async_session

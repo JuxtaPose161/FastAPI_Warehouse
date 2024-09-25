@@ -2,10 +2,12 @@ FROM python:3.12
 
 RUN mkdir /app
 WORKDIR /app
-COPY ./requirements /app/
-RUN pip install -r .\requirements\prod.txt
-COPY . /app/
-RUN alembic upgrade head
+COPY requirements.txt .
 
-WORKDIR src
-CMD gunicorn main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000
+RUN pip install -r requirements.txt
+
+COPY . .
+
+RUN chmod a+x docker/*.sh
+
+CMD ["docker/app.sh"]
